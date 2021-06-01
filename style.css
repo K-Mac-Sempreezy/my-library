@@ -10,6 +10,15 @@ body {
   width: 100vw;
 }
 
+h1 {
+  font-weight: 500;
+  font-family: 'Playfair Display SC', serif;
+}
+
+/* span {
+  font-size: 24px;
+} */
+
 .wrapper {
   display: flex;
   flex-direction: row;
@@ -17,7 +26,9 @@ body {
 
 header {
   position: fixed;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   max-height: 80px;
