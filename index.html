@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+  <title>Document</title>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="new-book-container">
+      <button class="new-book-button" id="new-book-button">NEW BOOK</button>
+    </div>
+    <header>
+    </header>
+    <div class="form-container">
+      <div class="container">
+        <div>
+          <label for="book-title">Title <span style="color: rgba(255, 0, 0, 0.596)">*</span></label>
+        </div>
+        <div>
+          <input class="input" type="text" id="book-title" name="title" required>
+        </div> 
+      </div>
+      <div class="container">
+        <div>
+          <label for="book-author">Author <span style="color: rgba(255, 0, 0, 0.596)">*</span></label>
+        </div>
+        <div>
+          <input class="input" type="text" id="book-author" name="author" required>
+        </div>
+      </div>
+      <div class="container">
+        <div>
+          <label for="pages">Pages <span style="color: rgba(255, 0, 0, 0.596)">*</span></label>
+        </div>
+        <div>
+          <input class="input" type="number" id="book-pages" name="pages" min="0" required>
+        </div>
+      </div>
+      <div class="container radio-field">
+        <p class="p-radio">Have you read this book?<span style="color: rgba(255, 0, 0, 0.596)"> *</span></p>
+        <input type="radio" id="read" class="yes" name="have-read" value="yes">
+        <label class="radio-label" for="read">Yes</label>
+        <input type="radio" id="not-read" name="have-read" value="no">
+        <label class="radio-label" for="not-read">No</label>
+      </div>
+      <div class="container">
+        <div class="submit-container">
+          <input class="submit inactive-submit" id="submit-button" type="submit" value="SUBMIT">
+          <input class="submit cancel" id="cancel-button" type="submit" value="CANCEL">
+        </div>
+      </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <div class="card-container" id="card-container"></div>
+    <div class="pop-up-container">
+      <h4>Are you sure you want to delete the book?</h4>
+      <div class="pop-up-buttons-container"> 
+        <button class="pop-up-button yes">Yes, delete</button>
+        <button class="pop-up-button no">No, cancel</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
