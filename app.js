@@ -17,8 +17,8 @@ const cardContainer = document.getElementById('card-container');
 const overlay = document.getElementById('overlay');
 const popUp = document.querySelector('.pop-up-container');
 const popUpButtons = document.querySelector('.pop-up-button');
-const yes = document.querySelector('.yes');
-const no = document.querySelector('.no');
+const yes = document.querySelectorAll('.yes');
+const no = document.querySelectorAll('.no');
 
 //Global Variables
 let idx; 
@@ -74,7 +74,6 @@ function addBookToLibrary() {
 }
 
 const resetForm = () => {
-  
   submitBtn.classList.add('inactive-submit');
   idx = '';
   edit = false;
@@ -85,17 +84,16 @@ const resetForm = () => {
   read.checked = false;
   notRead.checked = false;
   newBookBtn.innerText = 'NEW BOOK';
+  overlay.style.width = '100vw';
 };
 
 const showForm = () => {
-
   if (edit) {
     newBookBtn.innerText = 'EDIT';
   };
   newBook.style.transform = 'translateY(100px)';
   newBookBtn.classList.add('inactive-button');
   newBookBtn.classList.remove('button');
-  header.style.visibility = 'hidden';
   form.style.transform = 'translateX(0)';
   cardContainer.style.transform = 'translateX(350px)';
   cardContainer.style.width = 'calc(100vw - 350px)';
@@ -107,12 +105,11 @@ const hideForm = () => {
   if (edit) {
     resetForm();
   }
-  toggleDisplay();
+  toggleOverlay();
   newBookBtn.classList.add('button');
   newBookBtn.classList.remove('inactive-button');
   newBookBtn.style.transition = 'transform 0.5s ease-out';
   newBook.style.transform = 'translateY(0px)';
-  header.style.visibility = 'visible';
   form.style.transform = 'translateX(-350px)';
   cardContainer.style.transform = 'translateX(0px)';
   cardContainer.style.width = '100vw';
@@ -215,7 +212,6 @@ const formHandler = () => {
   }
   
   const initListOfBooks = () => {
-  
     while (cardContainer.firstElementChild) {
       cardContainer.firstElementChild.remove();
     }
@@ -226,7 +222,6 @@ const formHandler = () => {
   };; 
 
   const hasReadHandler = (e) => {
-    
     let index = e.target.dataset.index;
     if (e.target.innerText === '') {
       myLibrary[index].hasRead = true;
@@ -241,7 +236,8 @@ const formHandler = () => {
 
 const editHandler = (e) => {
   edit = true;
-  toggleDisplay();
+  toggleOverlay();
+  overlay.style.width = 'calc(100vw - 350px)';
   let index = e.target.dataset.index;
   titleInput.value = myLibrary[index].title;
   authorInput.value = myLibrary[index].author;
@@ -259,36 +255,35 @@ const editHandler = (e) => {
 };
 
 const popUpEl = (e) => {
-  toggleDisplay();
   idx = e.target.dataset.index;
   popUp.style.visibility = 'visible';
+  overlay.style.display = 'block';
 };
 
 const deleteBook = () => {
+  console.log('delete');
   myLibrary.splice(idx, 1);
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   idx = '';
   popUp.style.visibility = 'hidden';
-  toggleDisplay();
+  overlay.style.display = '';
   initListOfBooks();
 };
 
 const cancelAction = () => { //only accessed by popup window
-  
   idx = '';
   popUp.style.visibility = 'hidden';
-  toggleDisplay();
+  overlay.style.display = '';
 };
 
-const toggleDisplay = () => {
+const toggleOverlay = () => {
   if (edit === false && submit && overlay.style.display === '') {
     submit = false;
     return;
   } else if (edit === false && submit === false && overlay.style.display === '') {
     return;
-  } else if (edit && overlay.style.display === '') {
+  } 
 
-  }
   overlay.style.display === ''
     ? (overlay.style.display = 'block')
     : (overlay.style.display = ''); //remove option to click on card container elements
@@ -303,6 +298,6 @@ titleInput.addEventListener('change', formHandler);
 authorInput.addEventListener('change', formHandler);
 pagesInput.addEventListener('change', formHandler);
 submitBtn.addEventListener('click', addBookToLibrary);
-yes.addEventListener('click', deleteBook);
-no.addEventListener('click', cancelAction);
+yes.forEach(yes => yes.addEventListener('click', deleteBook));
+no.forEach(no => no.addEventListener('click', cancelAction));
 window.addEventListener('load', initListOfBooks);
