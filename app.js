@@ -17,8 +17,8 @@ const cardContainer = document.getElementById('card-container');
 const overlay = document.getElementById('overlay');
 const popUp = document.querySelector('.pop-up-container');
 const popUpButtons = document.querySelector('.pop-up-button');
-const yes = document.querySelectorAll('.yes');
-const no = document.querySelectorAll('.no');
+const popUpDeleteButton = document.querySelector('.yes-delete');
+const popUpCancelButton = document.querySelector('.no-cancel');
 
 //Global Variables
 let idx; 
@@ -46,7 +46,7 @@ class Book {
 
 
 // Form Functions
-function addBookToLibrary() {
+const addBookToLibrary = () => {
   if (submit === false){ return };
   if (edit) {
     newBookBtn.textContent = 'NEW BOOK';
@@ -54,12 +54,11 @@ function addBookToLibrary() {
     myLibrary[idx].author = authorInput.value;
     myLibrary[idx].pages = pagesInput.value;
     read.checked === true
-    ? (myLibrary[idx].hasRead = read.checked)
+    ? (myLibrary[idx].hasRead = true)
     : (myLibrary[idx].hasRead = false);
     
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     hideForm();
-    resetForm();
     initListOfBooks();
     return;
   }
@@ -69,7 +68,6 @@ function addBookToLibrary() {
   myLibrary.push(newBook); 
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   hideForm();
-  resetForm();
   initListOfBooks();
 }
 
@@ -83,8 +81,6 @@ const resetForm = () => {
   pagesInput.value = '';
   read.checked = false;
   notRead.checked = false;
-  newBookBtn.innerText = 'NEW BOOK';
-  overlay.style.width = '100vw';
 };
 
 const showForm = () => {
@@ -102,10 +98,6 @@ const showForm = () => {
 };
 
 const hideForm = () => {
-  if (edit) {
-    resetForm();
-  }
-  toggleOverlay();
   newBookBtn.classList.add('button');
   newBookBtn.classList.remove('inactive-button');
   newBookBtn.style.transition = 'transform 0.5s ease-out';
@@ -113,6 +105,9 @@ const hideForm = () => {
   form.style.transform = 'translateX(-350px)';
   cardContainer.style.transform = 'translateX(0px)';
   cardContainer.style.width = '100vw';
+  newBookBtn.innerText = 'NEW BOOK';
+  overlay.style.width = '100vw';
+  overlay.style.display = 'hidden';
   container.forEach(
     (container) =>
     (container.style.transition =
@@ -122,6 +117,8 @@ const hideForm = () => {
         (container) => (container.style.transform = 'translateX(-350px)')
         );
         container.forEach((container) => (container.style.opacity = '0'));
+  resetForm();
+  toggleOverlay();
 };
 
 const formHandler = () => {
@@ -138,93 +135,93 @@ const formHandler = () => {
   };
 
   
-  //Card Functions
-  const createCard = (book, index) => {
-    let card = document.createElement('div');
-    card.className = 'card';
-    card.id = `card${index}`;
-    
-    let image = document.createElement('div');
-    image.className = 'img';
-    const random = () => {
-      return Math.floor(Math.random() * 255);
-    };
-    let rgba = `rgba(${random()}, ${random()}, ${random()}, ${Math.random()})`;
-    image.style.backgroundColor = rgba;
+//Card Functions
+const createCard = (book, index) => {
+  let card = document.createElement('div');
+  card.className = 'card';
+  card.id = `card${index}`;
   
-    let checkBox = document.createElement('div');
-      checkBox.classList.add('check-box');
-      checkBox.dataset.index = index;
-      checkBox.id = 'check-box';
-      checkBox.style.backgroundColor = `rgb(255,255,255,1)`;
-      if (book.hasRead) {
-        checkBox.innerText = '✓';
-      } else {
-        checkBox.innerText = '';
-      }
-      checkBox.addEventListener('click', hasReadHandler);
-  
-    let checkBoxLabel = document.createElement('div');
-      checkBoxLabel.classList.add('check-box-label');
-      spanLabel = 'read';
-      checkBoxLabel.innerText = 'read';
-  
-    let title = document.createElement('h3');
-      title.innerText = book.title;
-    
-    let author = document.createElement('p');
-      author.innerText = `by ${book.author}`;
-  
-    let buttons = document.createElement('div');
-      buttons.classList.add('buttons');
-  
-    let removeBtn = document.createElement('button');
-      removeBtn.classList.add('card-buttons');
-      removeBtn.textContent = 'delete';
-      removeBtn.dataset.index = index;
-      removeBtn.id = `delete`;
-      removeBtn.addEventListener('click', popUpEl);
-      
-    let edit = document.createElement('button');
-      edit.classList.add('card-buttons');
-      edit.dataset.index = index;
-      edit.textContent = 'edit';
-      edit.id = 'edit';
-      edit.addEventListener('click', editHandler);
-      
-    // let info = document.createElement('button');
-    //   info.classList.add('card-buttons');
-    //   info.dataset.index = index;
-    //   info.textContent = 'info';
-    //   info.id = 'info';
-    //   info.addEventListener('click', infoElement);
-  
-    card.appendChild(image);
-    card.appendChild(checkBoxLabel);
-    card.appendChild(checkBox);
-    card.appendChild(title);
-    card.appendChild(author);
-    // buttons.appendChild(info);
-    buttons.appendChild(edit);
-    buttons.appendChild(removeBtn);
-    card.appendChild(buttons);
-    cardContainer.appendChild(card);
-  }
-  
-  const initListOfBooks = () => {
-    while (cardContainer.firstElementChild) {
-      cardContainer.firstElementChild.remove();
-    }
-  
-    myLibrary.forEach((book, index) => {
-      createCard(book, index);
-    });
-  };; 
+  let image = document.createElement('div');
+  image.className = 'img';
+  const random = () => {
+    return Math.floor(Math.random() * 255);
+  };
+  let rgba = `rgba(${random()}, ${random()}, ${random()}, ${Math.random()})`;
+  image.style.backgroundColor = rgba;
 
-  const hasReadHandler = (e) => {
-    let index = e.target.dataset.index;
-    if (e.target.innerText === '') {
-      myLibrary[index].hasRead = true;
+  let checkBox = document.createElement('div');
+    checkBox.classList.add('check-box');
+    checkBox.dataset.index = index;
+    checkBox.id = 'check-box';
+    checkBox.style.backgroundColor = `rgb(255,255,255,1)`;
+    if (book.hasRead) {
+      checkBox.innerText = '✓';
+    } else {
+      checkBox.innerText = '';
+    }
+    checkBox.addEventListener('click', hasReadHandler);
+
+  let checkBoxLabel = document.createElement('div');
+    checkBoxLabel.classList.add('check-box-label');
+    spanLabel = 'read';
+    checkBoxLabel.innerText = 'read';
+
+  let title = document.createElement('h3');
+    title.innerText = book.title;
+  
+  let author = document.createElement('p');
+    author.innerText = `by ${book.author}`;
+
+  let buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
+  let removeBtn = document.createElement('button');
+    removeBtn.classList.add('card-buttons');
+    removeBtn.textContent = 'delete';
+    removeBtn.dataset.index = index;
+    removeBtn.id = `delete`;
+    removeBtn.addEventListener('click', popUpEl);
+    
+  let edit = document.createElement('button');
+    edit.classList.add('card-buttons');
+    edit.dataset.index = index;
+    edit.textContent = 'edit';
+    edit.id = 'edit';
+    edit.addEventListener('click', editHandler);
+    
+  // let info = document.createElement('button');
+  //   info.classList.add('card-buttons');
+  //   info.dataset.index = index;
+  //   info.textContent = 'info';
+  //   info.id = 'info';
+  //   info.addEventListener('click', infoElement);
+
+  card.appendChild(image);
+  card.appendChild(checkBoxLabel);
+  card.appendChild(checkBox);
+  card.appendChild(title);
+  card.appendChild(author);
+  // buttons.appendChild(info);
+  buttons.appendChild(edit);
+  buttons.appendChild(removeBtn);
+  card.appendChild(buttons);
+  cardContainer.appendChild(card);
+};
+
+const initListOfBooks = () => {
+  while (cardContainer.firstElementChild) {
+    cardContainer.firstElementChild.remove();
+  }
+
+  myLibrary.forEach((book, index) => {
+    createCard(book, index);
+  });
+};
+
+const hasReadHandler = (e) => {//accessed by card checkbox only
+  let index = e.target.dataset.index;
+  if (e.target.innerText === '') {
+    myLibrary[index].hasRead = true;
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     e.target.innerText = '✓';
   } else {
@@ -238,17 +235,18 @@ const editHandler = (e) => {
   edit = true;
   toggleOverlay();
   overlay.style.width = 'calc(100vw - 350px)';
-  let index = e.target.dataset.index;
-  titleInput.value = myLibrary[index].title;
-  authorInput.value = myLibrary[index].author;
-  pagesInput.value = myLibrary[index].pages;
-  hasRead = myLibrary[index].hasRead;
+  idx = e.target.dataset.index;
+  console.log(idx);
+  titleInput.value = myLibrary[idx].title;
+  authorInput.value = myLibrary[idx].author;
+  pagesInput.value = myLibrary[idx].pages;
+  let hasRead = myLibrary[idx].hasRead;
   if (hasRead) {
-    read.checked = hasRead;
+    read.checked = true;
     notRead.checked = false;
   } else {
     read.checked = false;
-    notRead.checked = hasRead;
+    notRead.checked = true;
   }
   formHandler();
   showForm();
@@ -260,8 +258,12 @@ const popUpEl = (e) => {
   overlay.style.display = 'block';
 };
 
-const deleteBook = () => {
-  console.log('delete');
+//only accessed by popup window
+const deleteBook = (e) => { 
+  console.log(e, idx)
+  if (idx === ''){
+    return;
+  }
   myLibrary.splice(idx, 1);
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   idx = '';
@@ -270,7 +272,8 @@ const deleteBook = () => {
   initListOfBooks();
 };
 
-const cancelAction = () => { //only accessed by popup window
+//only accessed by popup window
+const cancelAction = () => { 
   idx = '';
   popUp.style.visibility = 'hidden';
   overlay.style.display = '';
@@ -287,7 +290,7 @@ const toggleOverlay = () => {
   overlay.style.display === ''
     ? (overlay.style.display = 'block')
     : (overlay.style.display = ''); //remove option to click on card container elements
-};;
+};
 
 
 
@@ -298,6 +301,6 @@ titleInput.addEventListener('change', formHandler);
 authorInput.addEventListener('change', formHandler);
 pagesInput.addEventListener('change', formHandler);
 submitBtn.addEventListener('click', addBookToLibrary);
-yes.forEach(yes => yes.addEventListener('click', deleteBook));
-no.forEach(no => no.addEventListener('click', cancelAction));
+popUpDeleteButton.addEventListener('click', deleteBook);
+popUpCancelButton.addEventListener('click', cancelAction);
 window.addEventListener('load', initListOfBooks);
