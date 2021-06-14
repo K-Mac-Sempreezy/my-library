@@ -1,5 +1,6 @@
 * {
  margin: 0;
+ box-sizing: border-box;
 }
 
 html {
@@ -8,20 +9,57 @@ html {
 
 body {
   width: 100vw;
+  height: 100vh;
 }
 
 h1 {
-  font-weight: 500;
-  font-family: 'Playfair Display SC', serif;
+  font-family: 'Londrina Outline', cursive;
+  margin: 0 150px;
 }
 
-/* span {
-  font-size: 24px;
-} */
 
-.wrapper {
+img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image:url(PICS/anastase-maragos-ovoXAXuCsdA-unsplash.jpg);
+  opacity: 0.15;
+}
+
+.new-book-button {
+  position: fixed;
+  top: 18px;
+  left: 50px;
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black;
+  background-color: white;
+  padding: 15px 90px;
+  max-height: 45px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  cursor: pointer;
+  z-index: 103;
+  transition: transform 0.4s ease-in-out;
+}
+
+.new-book-button-shadow {
+  position: fixed;
+  top: 18px;
+  left: 50px;
+  border: 2px solid black;
+  background-color: black;
+  padding: 15px 90px;
+  max-height: 45px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  cursor: pointer;
+  z-index: 102;
+  visibility: visible;
+  transition: transform 0.4s ease-in-out;
 }
 
 header {
@@ -29,46 +67,47 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 24px;
+  letter-spacing: 2px;
   top: 0;
   left: 0;
   max-height: 80px;
   min-height: 80px;
   width: 100vw;
   background-color: white;
-  box-shadow: 3px 3px 6px rgb(0, 0, 0, 0.2), 6px 6px 12px rgba(0,0,0,0.05);
+  border-bottom: 2px solid black;
   z-index: 101;
 }
 
-.new-book-container {
+.header-btn-container {
   position: fixed;
   top: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 80px;
   width: 350px;
   z-index: 102;
-  transition: transform 0.3s ease-in-out;
-  /* transform: translateY(200px); */
 } 
 
-.new-book-button {
+header button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(246, 185, 131);
-  padding: 15px 90px;
-  border-radius: 25px;
+  color: rgba(0, 0, 0, 0.6);
+  background-color: white;
+  padding: 15px 50px;
   max-height: 45px;
   border: none;
   font-weight: 500;
   letter-spacing: 1.3px;
   cursor: pointer;
-  box-shadow: 3px 3px 6px rgba(0,0,0,0.075), -2px -2px 12px rgba(0,0,0,0.05), 6px 6px 12px rgba(0,0,0,0.05);
 }
 
-.new-book-button:hover {
-  background-color: rgba(246, 185, 131, 0.9);
+header button:hover {
+  color: black;
+  border: 2px solid black;
 }
 
 .form-container {
@@ -84,8 +123,8 @@ header {
   max-width: 350px;
   padding-top: 200px;
   background-color: white;
-  box-shadow: 3px 3px 6px rgb(0, 0, 0, 0.2), 6px 6px 12px rgba(0,0,0,0.05);
-  transition: transform 0.4s ease-in-out;
+  border-right: 2px solid black;
+  transition: transform 0.5s ease-in-out;
   transform: translateX(-350px);
   z-index: 80;
 }
@@ -96,17 +135,13 @@ header {
   justify-content: center;
   background-color: transparent;
   padding: 15px 90px;
-  border-radius: 25px;
   max-height: 45px;
   border: 2px solid rgba(0,0,0,0.1);
+  background-color: white;
   font-weight: 500;
   letter-spacing: 1.3px;
   color: rgba(0,0,0,0.3);
   box-shadow: none;
-}
-
-.inactive-button:hover {
-  background-color: transparent;
 }
 
 .container {
@@ -121,9 +156,8 @@ label {
 }
 
 input[type="text"] {
-  border: 2px solid rgba(0, 255, 21, 0.2);
-  border-radius: 10px;
-  background-color: transparent;
+  border: 2px solid black;
+  background-color: white;
   font-size: 16px;
   display: inline-block;
   padding: 10px;
@@ -131,9 +165,8 @@ input[type="text"] {
 }
 
 input[type="number"] {
-  border: 2px solid rgba(0, 255, 21, 0.2);
-  border-radius: 10px;
-  background-color: transparent;
+  border: 2px solid black;
+  background-color: white;
   font-size: 16px;
   display: inline-block;
   padding: 10px;
@@ -167,28 +200,26 @@ input[type="radio"] .yes {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(42, 92, 255);
-  color: rgb(255, 255, 255);
+  background-color: white;
+  color: black;
   padding: 15px 80px;
-  border-radius: 25px;
   max-height: 45px;
-  border: none;
+  border: 2px solid black;
   font-weight: 600;
   margin: 20px;
   letter-spacing: 1.3px;
   cursor: pointer;
-  box-shadow: 3px 3px 6px rgba(0,0,0,0.075), -2px -2px 12px rgba(0,0,0,0.05), 6px 6px 12px rgba(0,0,0,0.05);
 }
 
 .cancel {
-  color: rgb(250, 128, 114);
-  /* border: 2px solid rgba(250, 128, 114, 0.5); */
-  background-color: transparent;
+  color: rgb(0, 0, 0);
+  border: 2px solid rgb(255, 255, 255);
+  background-color: white;
   box-shadow: none;
 }
 
 .cancel:hover {
-  background-color: rgba(250, 128, 114, 0.109);
+  border: 2px solid black;
 }
 
 .inactive-submit {
@@ -197,7 +228,6 @@ input[type="radio"] .yes {
   justify-content: center;
   background-color: transparent;
   padding: 15px 100px;
-  border-radius: 25px;
   max-height: 45px;
   border: 2px solid rgba(0,0,0,0.1);
   font-weight: 500;
@@ -270,6 +300,7 @@ h4 {
   flex-flow: wrap;
   transition: transform 0.5s;
   transform: translateX(0);
+  z-index: 10;
 }
 
 .overlay {
@@ -285,32 +316,37 @@ h4 {
 
 .card {
   position: relative;
-  border: none;
-  border-radius: 10px;
+  border: 2px solid black;
   height: 300px;
   max-height: 300px;
+  max-width: 300px;
   width: 300px;
-  box-shadow: 3px 3px 6px rgba(0,0,0,0.075), -2px -2px 12px rgba(0,0,0,0.05), 6px 6px 12px rgba(0,0,0,0.05);
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
   cursor: pointer;
   margin: 20px;
 }
 
+/* .rotate {
+  transform: rotate(90deg);
+} */
+
 .img {
-  min-height: 100px;
-  width: 300px;
+  min-height: 300px;
+  min-width: 20px;
   border: none;
   background-color: rgba(255, 255, 255, 0.472);
+  z-index: 1;
 }
 
 .check-box-label {
   position: absolute;
   right: 40px;
-  top: 75px;
+  top: 20px;
   font-family: sans-serif;
   color: rgba(0,0,0,0.4);
   min-height: 18px;
@@ -323,23 +359,31 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  top: 75px;
+  top: 20px;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  border: 2px solid black;
   min-height: 20px;
   min-width: 20px;
   max-height: 20px;
   max-width: 20px;
   color: rgb(3, 175, 3);
   font-size: 28px;
-  /* z-index: 10; */
+}
+
+.title-author-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 250px;
+  width: 300px;
 }
 
 .card h3 {
-  text-align: center;
-  padding: 40px 5px 0 5px;
+  padding: 0px 5px;
   font-family: sans-serif;
+  text-align: center;
   font-size: 24px;
   font-weight: 300;
   color: rgb(54, 54, 54);
@@ -348,47 +392,41 @@ h4 {
 .card p {
   color: rgb(95, 95, 95);
   font-family: 'Times New Roman', Times, serif;
-  justify-content: center;
+  text-align: center;
   font-size: 16px;
   margin-top: 10px;
-
 }
 
 .buttons {
+  position: fixed;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: row;
-  min-height: 80px;
-  width: 300px;
-  margin-top: 20px;
-  position: sticky;
-  bottom: 20px;
+  min-height: 30px;
+  width: 280px;
+  margin: 20px 0 0 10px;
+  bottom: 50px;
 }
 
 .card-buttons {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   background-color: transparent;
-  border-radius: 15px;
   max-height: 25px;
-  max-width: 75px;
+  width: 100px;
   border: none;
-  /* border: 2px solid rgba(0,0,0,0.1); */
   font-weight: 300;
   letter-spacing: 1.3px;
   color: rgba(0,0,0,0.4);
   box-shadow: none;
   padding: 5px 20px;
-  margin: 70px 0px 0 0px;
+  margin: 0px 0px 0 0px;
   cursor: pointer;
-  /* margin-bottom: 10px; 
-  position: sticky;
-  bottom: 10px;*/
 }
 
 .card-buttons:hover {
-  color: rgba(37, 145, 127, 0.5);
-  background-color: rgb(211, 253, 247);
+  border: 2px solid black;
+  color: black;
 }
