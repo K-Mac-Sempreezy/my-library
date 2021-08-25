@@ -29,7 +29,7 @@
           <label for="book-title">Title <span style="color: rgba(255, 0, 0, 0.596)">*</span></label>
         </div>
         <div>
-          <input class="input" type="text" id="book-title" name="title" required>
+          <input class="input" type="text" id="book-title" name="title" required minlength="1">
         </div> 
       </div>
       <div class="container">
@@ -37,7 +37,7 @@
           <label for="book-author">Author <span style="color: rgba(255, 0, 0, 0.596)">*</span></label>
         </div>
         <div>
-          <input class="input" type="text" id="book-author" name="author" required>
+          <input class="input" type="text" id="book-author" name="author" required minlength="1">
         </div>
       </div>
       <div class="container">
@@ -45,7 +45,7 @@
           <label for="pages">Pages <span style="color: rgba(255, 0, 0, 0.596)">*</span></label>
         </div>
         <div>
-          <input class="input" type="number" id="book-pages" name="pages" min="0" required>
+          <input class="input" type="number" id="book-pages" name="pages" min="0" required min="1" max="5000">
         </div>
       </div>
       <div class="container radio-field">

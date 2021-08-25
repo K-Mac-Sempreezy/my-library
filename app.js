@@ -21,7 +21,7 @@ const popUpCancelButton = document.querySelector('.no-cancel');
 const cardShadowContainer = document.querySelector('.card-shadow-container');
 
 //Global Variables
-let idx; 
+let idx;
 let formOpen = false;
 let edit = false;
 let submit = false;
@@ -38,29 +38,36 @@ class Book {
 
 // Form Functions
 const addBookToLibrary = () => {
-  if (submit === false){ return };
+  if (submit === false) {
+    return;
+  }
   if (edit) {
     newBookBtn.textContent = 'NEW BOOK';
     myLibrary[idx].title = titleInput.value;
     myLibrary[idx].author = authorInput.value;
     myLibrary[idx].pages = pagesInput.value;
     read.checked === true
-    ? (myLibrary[idx].hasRead = true)
-    : (myLibrary[idx].hasRead = false);
-    
+      ? (myLibrary[idx].hasRead = true)
+      : (myLibrary[idx].hasRead = false);
+
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     hideForm();
     initListOfBooks();
     return;
   }
-  
-  read.checked === true ? hasRead = true : hasRead = false;
-  const newBook = new Book(titleInput.value, authorInput.value, pagesInput.value, hasRead);
-  myLibrary.push(newBook); 
+
+  read.checked === true ? (hasRead = true) : (hasRead = false);
+  const newBook = new Book(
+    titleInput.value,
+    authorInput.value,
+    pagesInput.value,
+    hasRead
+  );
+  myLibrary.push(newBook);
   localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   hideForm();
   initListOfBooks();
-}
+};
 
 const resetForm = () => {
   submitBtn.classList.add('inactive-submit');
@@ -78,17 +85,19 @@ const showForm = () => {
   formOpen = true;
   if (edit) {
     newBookBtn.innerText = 'EDIT';
-  };
+  }
   newBookBtn.style.transition = 'transform 0.4s ease-in-out';
   newBookBtn.style.transform = 'translateY(100px)';
+  newBookBtn.classList.add('inactive-button');
   newBookShadow.style.transform = 'translateY(100px)';
   newBookShadow.style.visibility = 'hidden';
-  newBookBtn.classList.add('inactive-button');
   form.style.transform = 'translateX(0)';
   cardContainer.style.transform = 'translateX(350px)';
   cardContainer.style.width = 'calc(100vw - 350px)';
-  container.forEach(container => container.style.transform = "translateX(0px)");
-  container.forEach(container => container.style.opacity = "1");
+  container.forEach(
+    (container) => (container.style.transform = 'translateX(0px)')
+  );
+  container.forEach((container) => (container.style.opacity = '1'));
 };
 
 const hideForm = () => {
@@ -96,7 +105,7 @@ const hideForm = () => {
   newBookBtn.classList.remove('inactive-button');
   newBookBtn.style.transform = 'translateY(0px)';
   newBookBtn.innerText = 'NEW BOOK';
-  
+
   newBookShadow.style.transform = 'translateY(0px)';
   newBookShadow.style.visibility = 'visible';
 
@@ -110,13 +119,13 @@ const hideForm = () => {
 
   container.forEach(
     (container) =>
-    (container.style.transition =
-      'transform 0.3s ease-out, opacity 0.3s ease-out')
-      );
-      container.forEach(
-        (container) => (container.style.transform = 'translateX(-350px)')
-        );
-        container.forEach((container) => (container.style.opacity = '0'));
+      (container.style.transition =
+        'transform 0.3s ease-out, opacity 0.3s ease-out')
+  );
+  container.forEach(
+    (container) => (container.style.transform = 'translateX(-350px)')
+  );
+  container.forEach((container) => (container.style.opacity = '0'));
   resetForm();
   toggleOverlay();
 };
@@ -126,15 +135,14 @@ const formHandler = () => {
     titleInput.value.length > 0 &&
     authorInput.value.length > 0 &&
     pagesInput.value.length > 0
-    ) {
-      submitBtn.classList.remove('inactive-submit');
-      submit = true;
-    } else {
-      return;
-    }
-  };
+  ) {
+    submitBtn.classList.remove('inactive-submit');
+    submit = true;
+  } else {
+    return;
+  }
+};
 
-  
 //Card Functions
 const createCard = (book, index) => {
   let card = document.createElement('div');
@@ -218,7 +226,8 @@ const initListOfBooks = () => {
   });
 };
 
-const hasReadHandler = (e) => {//accessed by card checkbox only
+const hasReadHandler = (e) => {
+  //accessed by card checkbox only
   let index = e.target.dataset.index;
   if (e.target.innerText === '') {
     myLibrary[index].hasRead = true;
@@ -259,9 +268,9 @@ const popUpEl = (e) => {
 };
 
 //only accessed by popup window
-const deleteBook = (e) => { 
-  console.log(e, idx)
-  if (idx === ''){
+const deleteBook = (e) => {
+  console.log(e, idx);
+  if (idx === '') {
     return;
   }
   myLibrary.splice(idx, 1);
@@ -273,7 +282,7 @@ const deleteBook = (e) => {
 };
 
 //only accessed by popup window
-const cancelAction = () => { 
+const cancelAction = () => {
   idx = '';
   popUp.style.visibility = 'hidden';
   overlay.style.display = '';
@@ -283,9 +292,13 @@ const toggleOverlay = () => {
   if (edit === false && submit && overlay.style.display === '') {
     submit = false;
     return;
-  } else if (edit === false && submit === false && overlay.style.display === '') {
+  } else if (
+    edit === false &&
+    submit === false &&
+    overlay.style.display === ''
+  ) {
     return;
-  } 
+  }
 
   overlay.style.display === ''
     ? (overlay.style.display = 'block')
@@ -293,16 +306,17 @@ const toggleOverlay = () => {
 };
 
 const buttonHover = (e) => {
-  if (formOpen) { return };
+  if (formOpen) {
+    return;
+  }
   if (e.type === 'mouseenter') {
     newBookBtn.style.transition = 'transform 0.1s ease-in-out';
     newBookBtn.style.transform = 'translateX(-7px) translateY(-7px)';
-} else {
+  } else {
     newBookBtn.style.transition = 'transform 0.4s ease-in-out';
     newBookBtn.style.transform = 'translateX(0px) translateY(0px)';
   }
 };
-
 
 //Event Listeners
 newBookBtn.addEventListener('click', showForm);
